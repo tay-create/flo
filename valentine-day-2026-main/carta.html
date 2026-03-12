@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Letter</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            background-color: #f7d9da;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            font-family: sans-serif;
+        }
+
+        .envlope-wrapper {
+            height: 380px;
+            margin-top: 50px;
+        }
+
+        #envelope {
+            position: relative;
+            width: 280px;
+            height: 180px;
+            background-color: #f9c5c8;
+            border-bottom-left-radius: 6px;
+            border-bottom-right-radius: 6px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Parte de trás e abas */
+        .front {
+            position: absolute;
+            width: 0;
+            height: 0;
+            z-index: 10; /* Garante que a frente cubra a carta */
+        }
+
+        .flap {
+            border-left: 140px solid transparent;
+            border-right: 140px solid transparent;
+            border-bottom: 82px solid transparent;
+            border-top: 98px solid #ff3333;
+            transform-origin: top;
+            pointer-events: none;
+            z-index: 11; /* Aba por cima de tudo quando fechada */
+        }
+
+        .pocket {
+            border-left: 140px solid #ff9999;
+            border-right: 140px solid #ff9999;
+            border-bottom: 90px solid #fd8787;
+            border-top: 90px solid transparent;
+            border-bottom-left-radius: 6px;
+            border-bottom-right-radius: 6px;
+            z-index: 10;
+        }
+
+        /* Ajuste da Folha (Carta) */
+        .letter {
+            position: absolute;
+            background-color: #ffffff;
+            width: 90%;
+            margin-left: 5%;
+            height: 90%;
+            top: 5%;
+            border-radius: 6px;
+            box-shadow: 0 2px 26px rgba(0, 0, 0, 0.12);
+            padding: 15px;
+            box-sizing: border-box;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 5; /* Atrás da pocket e flap, na frente do fundo */
+            transition: transform 0.5s ease;
+        }
+
+        .letter-text {
+            color: #d00000;
+            font-family: 'Dancing Script', cursive;
+            font-size: 18px;
+            font-weight: bold;
+            line-height: 1.2;
+        }
+
+        /* Animação de Abrir */
+        .open .flap {
+            transform: rotateX(180deg);
+            z-index: 1; /* Vai para trás ao abrir */
+            transition: transform 0.4s ease, z-index 0.6s;
+        }
+
+        .open .letter {
+            transform: translateY(-100px); /* Sobe a carta */
+            z-index: 6; /* Fica visível acima da aba aberta */
+            transition: transform 0.4s 0.4s ease;
+        }
+
+        /* Fechar */
+        .close .flap {
+            transform: rotateX(0deg);
+            z-index: 11;
+            transition: transform 0.4s 0.4s ease, z-index 1s;
+        }
+
+        .close .letter {
+            transform: translateY(0px);
+            transition: transform 0.4s ease;
+        }
+
+        /* Corações */
+        .hearts {
+            position: absolute;
+            top: 90px;
+            left: 0;
+            right: 0;
+            z-index: 2;
+        }
+
+        .heart {
+            position: absolute;
+            bottom: 0;
+            right: 10%;
+            pointer-events: none;
+        }
+
+        .heart:before, .heart:after {
+            position: absolute;
+            content: "";
+            left: 50px;
+            top: 0;
+            width: 50px;
+            height: 80px;
+            background: #D00000;
+            border-radius: 50px 50px 0 0;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+        }
+
+        .heart:after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+
+        .close .heart { opacity: 0; }
+
+        .a1 { left: 20%; transform: scale(0.4); animation: slideUp 4s linear infinite; animation-delay: 0.7s; }
+        .a2 { left: 55%; transform: scale(0.6); animation: slideUp 5s linear infinite; animation-delay: 1s; }
+        .a3 { left: 10%; transform: scale(0.5); animation: slideUp 7s linear infinite; animation-delay: 1.2s; }
+
+        @keyframes slideUp {
+            0% { top: 0; opacity: 0; }
+            30% { opacity: 1; }
+            100% { top: -500px; opacity: 0; }
+        }
+
+        /* Botões */
+        .reset { text-align: center; margin-top: 30px; }
+        .reset button {
+            font-weight: 800;
+            background-color: #ff5757;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            padding: 10px 25px;
+            cursor: pointer;
+            text-transform: uppercase;
+            margin: 0 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="envlope-wrapper">
+    <div id="envelope" class="close">
+        <div class="front flap"></div>
+        <div class="front pocket"></div>
+        <div class="letter">
+            <div class="letter-text">
+                Nunca vou reparar o que já fizeram a você, mas vou fazer de tudo para que você seja feliz!<br>Aceita ser minha Supporte?? ♥
+            </div>
+        </div>
+        <div class="hearts">
+            <div class="heart a1"></div>
+            <div class="heart a2"></div>
+            <div class="heart a3"></div>
+        </div>
+    </div>
+</div>
+
+<div class="reset">
+    <button id="open">Abrir</button>
+    <button id="reset">Fechar</button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        var envelope = $('#envelope');
+        $("#open, #envelope").click(function() {
+            envelope.addClass("open").removeClass("close");
+        });
+        $("#reset").click(function() {
+            envelope.addClass("close").removeClass("open");
+        });
+    });
+</script>
+
+</body>
+</html>

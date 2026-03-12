@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Você</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Inter:wght@300;500&display=swap" rel="stylesheet">
+    <link rel="icon" href="https://fav.farm/❤️" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #fdf2f2;
+            font-family: 'Inter', sans-serif;
+            color: #4a4a4a;
+            overflow-x: hidden;
+            padding-bottom: 100px;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(to bottom, #ffe4e6, #fdf2f2);
+        }
+
+        .hero h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            color: #d81b60;
+            margin: 20px 0;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        .icon-heart-main {
+            color: #d81b60;
+            width: 48px;
+            height: 48px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .counter-container {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .counter-box {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            text-align: center;
+            min-width: 80px;
+        }
+
+        .counter-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #d81b60;
+        }
+
+        .counter-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: #888;
+        }
+
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .polaroid {
+            background: white;
+            padding: 15px 15px 40px 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            width: 300px;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+
+        .polaroid:nth-child(odd) {
+            transform: rotate(-3deg);
+        }
+
+        .polaroid:nth-child(even) {
+            transform: rotate(3deg);
+        }
+
+        .polaroid:hover {
+            transform: rotate(0deg) scale(1.05);
+            z-index: 10;
+        }
+
+        .image-enhance {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            filter: contrast(1.05) saturate(1.1);
+            border: 1px solid #eee;
+        }
+
+        .caption {
+            font-family: 'Dancing Script', cursive;
+            text-align: center;
+            font-size: 1.8rem;
+            margin-top: 15px;
+            color: #333;
+        }
+
+        .music-player {
+            position: fixed;
+            bottom: 20px;
+            right: 15px;
+            left: auto;
+            transform: none;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px 10px;
+            border-radius: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 8px 25px rgba(216, 27, 96, 0.25);
+            z-index: 1000;
+        }
+
+        .music-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .music-title {
+            font-weight: 600;
+            font-size: 0.75rem;
+            max-width: 60px;
+            word-wrap: break-word;
+            line-height: 1.2;
+        }
+
+        .music-artist {
+            font-size: 0.65rem;
+            color: #888;
+            max-width: 60px;
+            word-wrap: break-word;
+            margin-top: 2px;
+        }
+
+        .play-btn {
+            background: #d81b60;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .play-btn:hover {
+            background: #ad144d;
+        }
+
+        @media (max-width: 768px) {
+            .polaroid {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+
+        .final-gift-section {
+            text-align: center;
+            padding: 80px 20px 120px 20px; /* Espaço extra no final */
+            background: linear-gradient(to top, #fff0f3, #fdf2f2);
+            margin-top: 60px;
+        }
+
+        .gift-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            color: #d81b60;
+            margin-bottom: 10px;
+        }
+
+        .gift-subtitle {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+        }
+
+        /* Container Principal do Buque */
+        .bouquet-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .bouquet-gif {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            border-radius: 20px;
+            filter: drop-shadow(0 15px 25px rgba(216, 27, 96, 0.2));
+            z-index: 1;
+        }
+
+
+        .string-svg {
+            position: absolute;
+            width: 100px;
+            height: 80px;
+            top: 70%;
+            left: 60%;
+            z-index: 2;
+            transform: rotate(-10deg);
+        }
+
+
+        .message-tag {
+            position: absolute;
+            top: 80%;
+            right: 20px;
+            width: 200px;
+            background: #fffaf0;
+            padding: 15px;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.1);
+            transform: rotate(5deg);
+            z-index: 3;
+            border-radius: 2px;
+            clip-path: polygon(15% 0%, 100% 0, 100% 100%, 0 100%, 0 20%);
+        }
+
+        .tag-hole {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            width: 12px;
+            height: 12px;
+            background: #e0c9a6; 
+            border-radius: 50%;
+            box-shadow: inset 1px 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .tag-text {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.4rem;
+            color: #5a4a42;
+            line-height: 1.4;
+            margin-left: 15px; /* Espaço para não ficar em cima do furo */
+        }
+
+        @media (max-width: 480px) {
+            .bouquet-container {
+                height: auto;
+                padding-bottom: 260px; 
+            }
+
+        .bouquet-gif {
+            max-width: 95%;
+        }
+
+        .string-svg {
+            top: auto;
+            bottom: 220px;
+            left: 50%;
+            right: auto;
+            transform: translateX(-50%) rotate(0deg);
+            width: 40px;
+            height: 60px;
+        }
+
+        .message-tag {
+            top: auto;
+            bottom: 40px;
+            left: 50%;
+            right: auto;
+            transform: translateX(-50%) rotate(2deg);
+            width: 85%;
+            max-width: 300px;
+        }
+    }
+
+        /* Estilos da Carta (integrados de carta.html) */
+        .letter-section {
+            padding: 100px 20px 60px 20px;
+            margin-top: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #fdf2f2;
+            border-top: 1px dashed #ffe4e6;
+        }
+
+        .envlope-wrapper {
+            height: 380px;
+            margin-top: 20px;
+        }
+
+        #envelope {
+            position: relative;
+            width: 280px;
+            height: 180px;
+            background-color: #f9c5c8;
+            border-bottom-left-radius: 6px;
+            border-bottom-right-radius: 6px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+        }
+
+        .front {
+            position: absolute;
+            width: 0;
+            height: 0;
+            z-index: 10;
+        }
+
+        .flap {
+            border-left: 140px solid transparent;
+            border-right: 140px solid transparent;
+            border-bottom: 82px solid transparent;
+            border-top: 98px solid #ff3333;
+            transform-origin: top;
+            pointer-events: none;
+            z-index: 11;
+        }
+
+        .pocket {
+            border-left: 140px solid #ff9999;
+            border-right: 140px solid #ff9999;
+            border-bottom: 90px solid #fd8787;
+            border-top: 90px solid transparent;
+            border-bottom-left-radius: 6px;
+            border-bottom-right-radius: 6px;
+            z-index: 10;
+        }
+
+        .letter {
+            position: absolute;
+            background-color: #ffffff;
+            width: 90%;
+            margin-left: 5%;
+            height: 90%;
+            top: 5%;
+            border-radius: 6px;
+            box-shadow: 0 2px 26px rgba(0, 0, 0, 0.12);
+            padding: 15px;
+            box-sizing: border-box;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
+            transition: transform 0.5s ease;
+        }
+
+        .letter-text {
+            color: #d00000;
+            font-family: 'Dancing Script', cursive;
+            font-size: 18px;
+            font-weight: bold;
+            line-height: 1.2;
+        }
+
+        .open .flap {
+            transform: rotateX(180deg);
+            z-index: 1;
+            transition: transform 0.4s ease, z-index 0.6s;
+        }
+
+        .open .letter {
+            transform: translateY(-100px);
+            z-index: 6;
+            transition: transform 0.4s 0.4s ease;
+        }
+
+        .close .flap {
+            transform: rotateX(0deg);
+            z-index: 11;
+            transition: transform 0.4s 0.4s ease, z-index 1s;
+        }
+
+        .close .letter {
+            transform: translateY(0px);
+            transition: transform 0.4s ease;
+        }
+
+        .hearts-letter {
+            position: absolute;
+            top: 90px;
+            left: 0;
+            right: 0;
+            z-index: 2;
+        }
+
+        .heart-particle {
+            position: absolute;
+            bottom: 0;
+            right: 10%;
+            pointer-events: none;
+            color: #D00000;
+        }
+
+        .close .heart-particle { opacity: 0; }
+
+        .a1 { left: 20%; transform: scale(0.6); animation: slideUp 4s linear infinite; animation-delay: 0.7s; }
+        .a2 { left: 55%; transform: scale(0.8); animation: slideUp 5s linear infinite; animation-delay: 1s; }
+        .a3 { left: 10%; transform: scale(0.7); animation: slideUp 7s linear infinite; animation-delay: 1.2s; }
+
+        @keyframes slideUp {
+            0% { top: 0; opacity: 0; }
+            30% { opacity: 1; }
+            100% { top: -400px; opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <section class="hero">
+        <i data-lucide="heart" class="icon-heart-main"></i>
+        <h1>Para a Garota que Nunca sera Minha</h1>
+        <p>Cada momento com você sera o meu favorito.</p>
+
+        <div class="counter-container">
+            <div class="counter-box">
+                <div class="counter-number" id="days">0</div>
+                <div class="counter-label">Dias</div>
+            </div>
+            <div class="counter-box">
+                <div class="counter-number" id="hours">0</div>
+                <div class="counter-label">Horas</div>
+            </div>
+            <div class="counter-box">
+                <div class="counter-number" id="minutes">0</div>
+                <div class="counter-label">Minutos</div>
+            </div>
+        </div>
+    </section>
+
+    <div class="gallery">
+        <div class="polaroid">
+            <img src="foto1.png" alt="Momento 1" class="image-enhance">
+            <div class="caption">A mais bela de todo este reino</div>
+        </div>
+
+        <div class="polaroid">
+            <img src="foto2.png" alt="Momento 2" class="image-enhance">
+            <div class="caption">Uma obra de artes, esculpida em um molde divino.</div>
+        </div>
+
+        <div class="polaroid">
+            <img src="foto4.png" alt="Momento 3" class="image-enhance">
+            <div class="caption">Olhar para você é como encarar o sangue vermelho na neve</div>
+        </div>
+
+        <div class="polaroid">
+            <img src="foto3.png" alt="Momento 4" class="image-enhance">
+            <div class="caption">Nenhum deus conseguiria replicar a vastidão da sua beleza</div>
+        </div>
+    </div>
+
+    <section class="final-gift-section">
+        <h2 class="gift-title">E para finalizar...</h2>
+        <p class="gift-subtitle">Como eu não posso te entregar pessoalmente hoje.</p>
+
+        <div class="bouquet-container">
+            <img src="flores.gif" alt="Buquê Animado" class="bouquet-gif">
+
+            <svg class="string-svg" viewBox="0 0 200 100">
+                <path d="M20,10 Q60,60 150,80" stroke="#8d6e63" stroke-width="2" fill="none" stroke-dasharray="4,4"/>
+            </svg>
+
+            <div class="message-tag">
+                <div class="tag-hole"></div>
+                <p class="tag-text">
+                    Sei que você nunca recebeu flores, então aqui estão as primeiras de muitas. 
+                    Mesmo de longe, você merece sentir que pode ser especial para alguem. <br>
+                     Nanda !<i data-lucide="heart" style="width: 16px; display: inline-block;"></i>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="letter-section">
+        <div class="envlope-wrapper">
+            <div id="envelope" class="close">
+                <div class="front flap"></div>
+                <div class="front pocket"></div>
+                <div class="letter">
+                    <div class="letter-text">
+                        Nunca vou reparar o que já fizeram a você, mas vou fazer de tudo para que você seja feliz!<br>Aceita ser minha Supporte?? ♥
+                    </div>
+                </div>
+                <div class="hearts-letter">
+                    <div class="heart-particle a1"><i data-lucide="heart" fill="currentColor"></i></div>
+                    <div class="heart-particle a2"><i data-lucide="heart" fill="currentColor"></i></div>
+                    <div class="heart-particle a3"><i data-lucide="heart" fill="currentColor"></i></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex gap-4 mt-8">
+            <button id="open-letter" class="bg-rose-500 hover:bg-rose-600 text-white font-bold py-4 px-8 rounded-full shadow-lg transition-all transform hover:scale-105 active:scale-95 text-lg flex items-center gap-2">
+                <i data-lucide="mail-open"></i> Abrir
+            </button>
+            <button id="reset-letter" class="bg-gray-400 hover:bg-gray-500 text-white font-bold py-4 px-8 rounded-full shadow-lg transition-all transform hover:scale-105 active:scale-95 text-lg flex items-center gap-2">
+                <i data-lucide="mail"></i> Fechar
+            </button>
+        </div>
+    </section>
+
+    <div class="music-player">
+        <i data-lucide="music" style="color: #d81b60;"></i>
+        <div class="music-info">
+            <span class="music-title">Siren</span>
+            <span class="music-artist">Kailee Morgue</span>
+        </div>
+        <audio id="love-song" src="siren-audio.mp3" loop></audio>
+        <button class="play-btn" onclick="togglePlay()">
+            <i data-lucide="play" id="play-icon"></i>
+        </button>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        function togglePlay(){
+            const song = document.getElementById('love-song');
+            const btn = document.querySelector('.play-btn');
+
+            if (song.paused) {
+                song.play();
+                btn.innerHTML = '<i data-lucide="pause"></i>';
+            } else {
+                song.pause();
+                btn.innerHTML = '<i data-lucide="play"></i>';
+            }
+            
+            lucide.createIcons();
+        }
+
+        const startDate = new Date('2026-03-12T16:35:00'); 
+
+        function updateCounter() {
+            const now = new Date();
+            const difference = now - startDate;
+
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((difference / 1000 / 60) % 60);
+
+            document.getElementById('days').innerText = days;
+            document.getElementById('hours').innerText = hours;
+            document.getElementById('minutes').innerText = minutes;
+        }
+
+
+        setInterval(updateCounter, 1000);
+        updateCounter();
+
+        /** 
+         * Lógica da Carta
+         */
+        const envelope = document.getElementById('envelope');
+        const btnOpen = document.getElementById('open-letter');
+        const btnReset = document.getElementById('reset-letter');
+
+        btnOpen.addEventListener('click', () => {
+            envelope.classList.add("open");
+            envelope.classList.remove("close");
+        });
+
+        // Também permite abrir clicando no envelope
+        envelope.addEventListener('click', () => {
+            envelope.classList.add("open");
+            envelope.classList.remove("close");
+        });
+
+        btnReset.addEventListener('click', (e) => {
+            e.stopPropagation(); // Evita que o clique no botão de fechar abra o envelope de volta
+            envelope.classList.add("close");
+            envelope.classList.remove("open");
+        });
+
+        lucide.createIcons();
+    </script>
+</body>
+</html>
